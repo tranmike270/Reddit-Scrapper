@@ -1,0 +1,57 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="signupModalLabel">Sign Up for Reddit Scrapper</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form method="post" action="/register">
+            <div class='form-group'>
+                <div class ="row alerts" id="sign-up-message">
+                            <p id="name-alert" class="invalid"><b>First and Last name may only contain Alphabetical Characters, and '</b></p>
+                            <p id="username-alert" class="invalid"><b>Username is Alphanumeric and 6 to 13 characters.</b></p>
+
+                            <p><b>Password matches the following</b></p>
+
+
+                            <p id="capital" class="invalid"><b>At least 1 Uppercase Letter</b></p>
+                            <p id="lower" class="invalid"><b>At least 1 lowercase Letter</b></p>
+                            <p id="number" class="invalid"><b>At least 1 Number</b></p>
+                            <p id="length" class="invalid"><b>At least 8 characters</b></p>
+                            <p id="pass-match" class="invalid"><b>Both passwords match</b></p>
+
+                </div>
+            </div>
+            <div class='form-group'>
+                <div id="signup-error-msg">
+                    {{SignUpError}}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type = "text" class="form-control" pattern="^(?=.*[a-zA-Z])[a-zA-Z']{1,}$" placeholder="Your Name" id="register-first-name" name="firstName" required>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type = "text" class="form-control" pattern="^(?=.*[a-zA-Z])[a-zA-Z']{1,}$" placeholder="Your Name" id="register-last-name" name="lastName" required>
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type = "text" class="form-control"  placeholder="Username" id="register-username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type = "password" class="form-control"  pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{8,}[0-9]{1,}$" placeholder="Password" id="register-password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type = "password" class="form-control"  placeholder="Password" id="register-password2"  required>
+            </div>
+            <button type = "submit" class= "btn btn-default">Submit</button>
+        </form>
+    </div>
+</div>
+
+{{!-- pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{6,13}" --}}

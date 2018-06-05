@@ -1,0 +1,117 @@
+   {{>navbar/nav}}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="row">
+        <div class="col-md-5">
+            <h2 class="display-4">Welcome to your Dashboard</h2>
+            <p class="lead">Here you can find all your saved articles, and notes for those articles.</p>
+        </div>
+        <div class="col-md7">
+
+        </div>
+    </div>
+
+</div>
+<h2>Welcome {{firstName}} {{lastName}} to your Dashboard</h2>
+<div class="row" id="saved-articles-container">
+    <div class="col-9">
+    <div class="row">
+    <div class="list-group hidden" role="tablist" >
+
+        <a class="list-group-item list-group-item-action article-note" id="note-added" data-toggle="list" href="#note-added" role="tab">{{title}}</a> 
+
+    </div>
+
+    {{#each usersArticles}}
+    <div class="col-md-3">
+        <div class="userArticle card" data-subreddit='{{subReddit}}'>
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{title}}
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">/r/{{subReddit}}</h6>
+                <hr>
+                <a href="{{link}}" class="card-link btn btn-primary">Link to Post</a>
+                <hr>
+
+                <div class="see-notes" data-article='{{_id}}' >Notes</div>
+                <div class="article-notes hide-article-notes">
+                    <h7 class="card-title" data-note-title='{{_id}}'>Getting Notes...</h7>
+                    <hr>
+                    <h4 class="text-muted">Click on the Note to Display it's content on the right</h4>
+                    <div class="list-group" role="tablist" data-note-list='{{_id}}'>
+                    {{!-- {{#each notes}}
+                        <a class="notes list-group-item list-group-item-action article-note" data-toggle="list" href="#note{{_id}}" role="tab">{{title}}</a> 
+                    {{/each}} --}}
+                    </div>
+
+                    <br>
+                    <hr>
+                    <div class="list-group" role="tablist">
+                        <a class="add-new-note list-group-item list-group-item-action" href='#article-tab-{{_id}}' data-toggle="list" role="tab">Add New Note</a> 
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
+    {{/each}}
+    </div>
+    </div>
+    <div class="col-3">
+        <div class="tab-content" id="articles-tabContent">
+            <div class="tab-pane fade show active" id="instructions" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                        <h3>Notes for</h3>
+                        <hr>
+                        <h4>Note Title</h4>
+                        <hr>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <hr>
+                        <button type="button" class="btn btn-danger note-delete-btn">Delete Note</button>
+                        <button type="button" class="btn btn-danager ">Change Note</button>
+                        </div>
+                        <form class="hidden">
+                            <div class="form-group">
+                                <label class="new-note-form-labels">Title</label>
+                                <input class="form-control new-note-form-input" type="text" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="new-note-form-labels">Text</label>
+                                <textarea class="form-control new-note-form-input" name="body"></textarea>
+                            </div>
+
+                            <button type="button" class="btn btn-primary">Update Note</button>
+                            <button type="button" class="btn btn-danager">Cancel Changes</button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade show active" id="note-added" role="tabpanel">
+
+            </div>
+            {{#each usersArticles}}
+            <div class="tab-pane fade" id="article-tab-{{_id}}" role="tabpanel">
+                <form class="form-new-note" data-form="{{_id}}">
+                    <div class="form-group">
+                        <h3>Add a New Note to..</h3>
+                        <h3>{{title}}</h3>
+                    </div>
+                    <div class="form-group">
+                        <label class="new-note-form-labels">Title</label>
+                        <input class="form-control new-note-form-input" data-new-title="{{_id}}" type="text" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="new-note-form-labels">Text</label>
+                        <textarea class="form-control new-note-form-input" data-new-body="{{_id}}"name="body"></textarea>
+                    </div>
+                    <button type="submit" data-new-btn="{{_id}}" class="btn btn-primary">Add Note</button>
+                </form>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

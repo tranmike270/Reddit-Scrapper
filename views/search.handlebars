@@ -1,0 +1,23 @@
+{{>navbar/nav}}
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h2 class="display-4">Search a Subreddit</h2>
+        <p class="lead">Input a subreddit to see its' post Remember it's case sensative!!</p>
+        <hr class="my-4">
+        <div class="form-group">
+            <input type="text" class="form-control" id="subreddit-input" placeholder="Input Desired Subreddit Here">
+            <label>This is the subreddit link you're going to search...</label>
+            <p id="subreddit-search-display">https://www.reddit.com/r/<span id="search-display"></span>/</p>
+            <div class="row justify-content-end">
+                <button type="button" class="btn btn-primary" id="subreddit-search">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row" id="searched-articles">
+    Search a subreddit to see its' post!
+</div>

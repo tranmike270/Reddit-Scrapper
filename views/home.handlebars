@@ -1,0 +1,94 @@
+{{>navbar/nav}}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <div class="row" id="home-header">
+            <div class="col-4" id="homepage-image">
+                This holds images of site after user logs in
+            </div>
+            <div class="col-8">
+                <h1>Welcome To Reddit Scrapper</h1>
+                <p>Save your reddit post! Leave a note about it!</p>
+                {{#if LoggedIn}}
+                    <a href="/search"><button type="button" class="btn btn-light login my-2 my-sm-0">Begin Saving Post!</button></a> 
+                {{else}}     
+                {{!-- Login Button --}}
+                <button type="button" class="btn btn-light login my-2 my-sm-0" data-toggle="modal" data-target="#loginModal">Login</button>
+                {{!-- Sign Up Button --}}
+                <button type="button" class="btn btn-light my-2 my-sm-0" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" id="directions">
+    <div class="col-12" id="directions-header">
+        <h3>How to use Reddit Scrapper!</h4> 
+    </div>
+    <div class="col-12" id="directions-content-header">
+        <h5 >Click on each step to see a full explanation of the step!</h5>
+    </div>
+    <div class="row" id="directions-content">
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#step-1" role="tab">1. Log-In or Sign-up if you haven't</a>
+                <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#step-2" role="tab">2. Visit Search Reddit</a>
+                <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#step-3" role="tab">3. Type a subreddit to search</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#step-4" role="tab">4. Save and post you wish to save</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#step-5" role="tab">5. Visit your dashboard to see your saved post</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#step-6" role="tab">6. Add any notes you wish to add</a>
+                <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#step-7" role="tab">7. It's that easy!</a>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="step-1" role="tabpanel" >
+                    <p class="step-description">
+                        In order for us to make sure whiched saved post belongs to who, we're going to need an account to attach it to! It only takes a few seconds to sign-up don't worry!
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="step-2" role="tabpanel" >
+                    <p class="step-description">
+                        Once you've successfully logged in or signed up, you'll be redirected to your dashboard. We'll talk more about that later, but for now navigate to the 'Search Reddit' page.
+                    </p>   
+                </div>
+                <div class="tab-pane fade" id="step-3" role="tabpanel" >
+                    <p class="step-description">
+                        Once at the 'Search Reddit' page, type in the input box any subreddit you wish to search. 
+                        <br>
+                        MAKE SURE what you type matches how Reddit has that specific subreddit in the url. 
+                        <br>
+                        It is case sensative. If you don't match it you might end up in the wrong place. 
+                        <br>
+                        EXAMPLE:
+                        <br>
+                        If you want to search for NBA subreddit, type in nba, NOT NBA.  
+                        <br>
+                        The search will pull the top post on that page! AKA Front-Page Reddit
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="step-4" role="tabpanel" >
+                    <p class="step-description">
+                        After you've pressed search, the post will begin to populate with the Post Title, and link. From there you may visit the post, or if you already know which post you want to save, simply click the save button and it will be added to your dashboard!
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="step-5" role="tabpanel" >
+                    <p class="step-description">
+                        Your dashboard contains any information you'll be looking for after you've saved your post. Visit your dashboard to see all the post you've ever saved!
+                    </p>
+                </div>
+                <div class="tab-pane fade" id="step-6" role="tabpanel" >
+                    <p class="step-description">
+                        At your dashboard you are allowed to add or remove notes on your saved post and delete any post you want to have removed.
+                    </p>
+            </div>
+                <div class="tab-pane fade" id="step-7" role="tabpanel" >
+                    <p class="step-description">
+                        That's it!! If you have any other questions visit the Q&#38;A page!
+                    </p>
+                </div>
+            </div>  
+    </div>
+    </div>
+    
+</div>

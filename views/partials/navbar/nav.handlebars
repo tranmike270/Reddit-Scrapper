@@ -1,0 +1,37 @@
+
+<div class="row justify-content-center" id="logo">
+    <a class="navbar-brand" href="/">Reddit Scrapper</a>
+<nav class="navbar" id="navbar">
+
+
+
+    {{#if LoggedIn}}
+
+    <a class="nav-link" href="{{links.dashboard}}">Dashboard</a>
+
+    <a class="nav-link" href="{{links.search}}">Search Reddit</a>
+
+    <a class="nav-link" href="{{links.home}}">How To</a>
+
+    <a class="nav-link" href="{{links.contact}}">Contact</a>
+
+    <a class="nav-link" href="/logout">Log Out</a>
+
+    {{else}}
+    
+    <a class="nav-link" href="/dashboard">Dashboard</a>
+
+    <a class="nav-link" href="/search">Search Reddit</a>
+
+    <a class="nav-link" href="/">How To</a>
+
+    <a class="nav-link" href="/contact">Contact</a>
+
+    {{/if}} 
+</nav>
+</div>
+
+
+
+
+{{>modals/handlers}}

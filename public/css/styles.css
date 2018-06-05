@@ -1,0 +1,59 @@
+
+#main-container {
+    padding: 0;
+}
+
+.row {
+    margin: 0;
+}
+
+.step-description {
+    font-size: 20px;
+}
+#navbar {
+    position: absolute;
+    right: 0%;
+    padding: 0;
+}
+
+.nav-link {
+    padding: auto;
+}
+
+.see-notes {
+    text-align: center;
+}
+
+.userArticle { 
+    position: relative;
+}
+.article-notes {
+    overflow: auto;
+    width: 100%;
+    padding: 0;
+    border: none;
+    z-index: 99;
+}
+
+.article-note {
+    z-index: 100;
+}
+.show-article-notes{
+    height: 100%;
+    -webkit-transition: ease 1s all .5s; 
+}
+
+
+.hide-article-notes {
+    height:0;
+    -webkit-transition: ease 1s all .5s; 
+}
+
+
+.hidden {
+    visibility: hidden;
+}
+
+button {
+    margin: 10px;
+}
