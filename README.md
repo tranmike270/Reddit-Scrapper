@@ -24,17 +24,25 @@ Contact me via email if you wish to contribute tranmike196@gmail.com. Thanks!
 This application is still in development!!!
 
 0.1v 06/05/2018
+```
 * 1st Commit
 * Basic layouts and some functionality done 
+```
 0.2v 06/06/2018
+```
 * 2nd Commit
 * Cleaned up; added more functionality
+```
 0.2.1v 06/06/2018
+```
 * 3rd Commit
 * Added ReadMe
+```
 0.2.2v 06/06/2018
+```
 * 4rd Commit
 * Fixed ReadMe typos
+```
 
 ## Authors
 
