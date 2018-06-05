@@ -12,13 +12,13 @@ This application uses MongoDB as the database so make sure you have mongo instal
 Simply do a git clone and npm install and you'll be able to run it locally.
 
 
-## Deploymed at
+## Deployed at
 
 https://reddit-scrapper.herokuapp.com/
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Contact me via email if you wish to contribute tranmike196@gmail.com. Thanks!
 
 ## Versioning
 This application is still in development!!!
@@ -29,6 +29,12 @@ This application is still in development!!!
 0.2v 06/06/2018
 * 2nd Commit
 * Cleaned up; added more functionality
+0.2.1v 06/06/2018
+* 3rd Commit
+* Added ReadMe
+0.2.2v 06/06/2018
+* 4rd Commit
+* Fixed ReadMe typos
 
 ## Authors
 
