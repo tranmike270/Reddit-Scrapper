@@ -8,7 +8,7 @@ var axios = require("axios");
 var Promises = require('bluebird');
 module.exports = function(app){
 
-    app.get('/saved/:id', articles.viewSaved);
+    app.get('/saved', articles.viewSavedJSON);
 
     // app.post('/newArticles', articles.findNew);
 
@@ -59,7 +59,7 @@ module.exports = function(app){
         });
         
     })
-    app.post('/save/:userId', articles.save);
+    app.post('/saveArticle', articles.save);
 
     app.get('/note/:articleId', articles.viewArticleNote);
     

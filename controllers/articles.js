@@ -19,7 +19,6 @@ var exports = module.exports = {};
             };
 
             $("p.title").each(function(i, element){
-                console.log(element);
                 var title = $(element).text();
 
                 var link = $(element).children().attr("href");
@@ -31,7 +30,6 @@ var exports = module.exports = {};
                 });
             });
 
-            console.log(results);
             
             res.json(results)
         });
@@ -43,7 +41,7 @@ var exports = module.exports = {};
         Article.create(req.body)
             .then(function(dbArticle){
 
-                return User.findOneAndUpdate({_id : req.params.userId}, {$push: {articles: dbArticle._id} }, { new: true});
+                return User.findOneAndUpdate({_id : req.user._id}, {$push: {articles: dbArticle._id} }, { new: true });
             })
             .then(function(dbUser){
                 res.json(dbUser);
@@ -88,7 +86,6 @@ var exports = module.exports = {};
     };
 
     exports.viewSaved = function(user,cb){
-        console.log("Here");
         User.find({_id : user._id})
         .populate({
             path: 'articles',
@@ -102,6 +99,21 @@ var exports = module.exports = {};
         })
         .catch(function(err){
             cb(err);
+        });
+    };
+
+    exports.viewSavedJSON = function(req,res){
+        console.log("Here");
+        User.findOne({_id : req.user._id})
+        .populate('articles')
+        .then(function(dbUser){
+            console.log(dbUser.articles);
+            res.json(dbUser.articles);
+
+        })
+        .catch(function(err){
+            console.log(err);
+            res.json(`ERROR: ${err}`);
         });
     };
 

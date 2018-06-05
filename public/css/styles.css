@@ -1,3 +1,38 @@
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 1rem;
+    height: 1.2rem;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: .9rem;
+    height: .9rem;
+    margin: 7px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 
 #main-container {
     padding: 0;
@@ -20,9 +55,6 @@
     padding: auto;
 }
 
-.see-notes {
-    text-align: center;
-}
 
 .userArticle { 
     position: relative;
@@ -40,20 +72,70 @@
 }
 .show-article-notes{
     height: 100%;
-    -webkit-transition: ease 1s all .5s; 
+    -webkit-transition: ease 0s all 0s; 
 }
 
 
 .hide-article-notes {
     height:0;
-    -webkit-transition: ease 1s all .5s; 
+    -webkit-transition: ease 0s all 0s; 
 }
 
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
+
 
 button {
     margin: 10px;
 }
+
+.card-footer {
+    background: #e1e1e1;
+}
+.see-notes {
+    text-align: center;
+    cursor: pointer;
+    background: #e1e1e1;
+    text-decoration: none;
+    color: black;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-font-smoothing: antialiased;
+    vertical-align: middle;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+}
+
+
+.see-notes:before {
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    content: '';
+    border-style: solid;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    left: calc(50% - 10px);
+    bottom: 0;
+    border-width: 10px 10px 0 10px;
+    border-color: #e1e1e1 transparent transparent transparent;
+}
+
+.see-notes:hover:before, .see-notes:focus:before, .see-notes:active:before {
+    -webkit-transform: translateY(10px);
+    transform: translateY(10px);
+}
+
+
+
+.tab-pane {
+    padding-left: 15px;
+    box-shadow:
+    -2px 0 0 0 hsl(0, 0%, 80%);
+
+}
+

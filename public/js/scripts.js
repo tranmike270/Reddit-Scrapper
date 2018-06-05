@@ -3,6 +3,7 @@
 $(document).ready(function(){
     var subreddit;
     var tabNotes = [];
+
     $("#subreddit-input").keyup(function(){
         console.log("hello");
         $("#search-display").text($(this).val().trim());
@@ -10,8 +11,8 @@ $(document).ready(function(){
 
     $("#subreddit-search").on('click', function(e){
         e.preventDefault();
-        $(this).prop('disabled', true);
-
+        $(this).prop('disabled', true).html('Searching <div class="lds-ring"><div></div><div></div><div></div><div></div></div>');
+        
         subreddit = $("#subreddit-input").val().trim();
         var subredditSearch = $("#subreddit-input").val().trim();
 
@@ -35,22 +36,190 @@ $(document).ready(function(){
 
 
     $('.see-notes').on('click', function(){
-        var articleNote = $(this).next();
+        var articleNote = $(this).next('.article-notes');
+        $('.see-notes').next('.article-notes').children('.main-group').empty();
+        $('.see-notes').next('.article-notes').removeClass('show-article-notes');
+        $('.see-notes').next('.article-notes').addClass('hide-article-notes');
+        if($(this).next('.article-notes').hasClass('show-article-notes')){
+            $(this).next('.article-notes').addClass('show-article-notes');
+            $(this).next('.article-notes').removeClass('hide-article-notes');
+        }else {
+            $(this).next('.article-notes').removeClass('hide-article-notes');
+            $(this).next('.article-notes').addClass('show-article-notes');
+            var articleID = $(this).attr('data-article');
+            
+            getNotes(articleID);
+        };
 
-        var all = $('.see-notes').next();
-        console.log(all.length);
-        for(var j = 0; j < all.length; j++){
-            if($(all[j]).hasClass('show-article-notes')){
-                $(all[j]).addClass('hide-article-notes');
-                $(all[j]).removeClass('show-article-notes');
-            }
+
+
+        
+    });
+
+    $(document).on('click','div.list-group a.list-group-item-action', function(){
+        console.log('...is this working')
+       $('.list-group-item-action').removeClass('active show');
+       $(".tab-pane").removeClass('active show'); 
+       $(this).addClass('active show');
+
+    });
+
+
+    $('.form-new-note').submit(function(event){
+        event.preventDefault();
+        var formID = $(this).attr('data-form');
+        var title = $('input[data-new-title="' + formID +'"]').val().trim();
+        var body = $('textarea[data-new-body="' + formID +'"]').val().trim();
+
+        var newNote = {
+            title: title,
+            body : body
+        };
+        $('button[data-new-btn="' + formID + '"]').prop('disabled', true).text('Adding Note...');
+        createNote(formID, newNote);
+
+    })
+
+    $(document).on('click', 'div.row div.col-4 div.card div.card-body button.save', function(){
+
+        console.log($(this).attr('data-title'));
+        console.log($(this).attr('data-link'));
+
+      
+        var data = {
+            subReddit : subreddit,
+            title : $(this).attr('data-title'),
+            link : $(this).attr('data-link')
+        };
+        $(this).attr({
+            class: 'btn btn-warning',
+            type: 'button'
+        }).html("Saving <div class='lds-ring'><div></div><div></div><div></div><div></div></div>").prop("disabled",true)
+
+        savePostToUser(data);
+
+    })
+
+    
+  
+    function createNewRow(post, saved) {
+        
+        var http = "https://"
+        if(post.link.includes(http)){
+
+        }else {
+            post.link = "https://www.reddit.com" + post.link;
         }
-        var articleID = $(this).attr('data-article');
+        var divHolder = $("<div>").addClass("col-4");
+        var newPostCard = $("<div>").addClass("card");
+        var newPostCardTitle = $("<div>").addClass("card-header").text(post.title);
+        if(saved.includes(post.link)){
+            var saveBtn = $("<button>").addClass("btn btn-success").attr({
+                type: 'button'
+            }).text("Saved!").prop('disabled',true);
+        }else {
+            var saveBtn = $("<button>").addClass("save btn btn-primary").attr({
+                type: 'button',
+                'data-link' : post.link,
+                'data-title' : post.title
+            }).text("Save");
+        }
+
+        var newPostCardBody = $("<div>").addClass("card-body");
+        var newPostLink = $("<a>").attr({
+            href : post.link,
+            target : "_blank"
+        }).text("Link to Post");
+        newPostCardBody.append(saveBtn);
+        newPostCardBody.append(newPostLink);
+        newPostCard.append(newPostCardTitle);
+        newPostCard.append(newPostCardBody);
+        newPostCard.data("post", post);
+        divHolder.append(newPostCard);
+        return divHolder;
+      }
+
+    function getPost(subredditSearch){
+        $.ajax('/saved',{
+            type: "GET"
+        }).then(function(articles){
+            var links = [];
+            if(articles[0].link){
+                for(var k = 0; k < articles.length; k++){
+                    links.push(articles[k].link)
+                }
+
+            }
+
+            $.ajax("/newArticles/" + subredditSearch, {
+                type: "GET"
+            }).then(function(data){
+                var noPostCounter = 0;
+                if(data.length > 0){
+                    
+                    $("#search-header-text").text(`Here's the top post from ${subredditSearch}!`);
+                    $("#searched-articles").empty();
+                    for(var i = 0; i < data.length; i++){
+                        var card = createNewRow(data[i], links);
+                            
+                        
+                        
+                        $("#searched-articles").append(card);
+                        
+                    };
+    
+                    $("#subreddit-search").prop('disabled', false).html('Search');
+    
+                }else {
+                    if(noPostCounter === 6){
+                        $("#subreddit-search").prop('disabled', false).html('Search');
+    
+                        $("#search-header-text").text("Unfortunately we could not find anything for that subreddit... Check and make sure your casing is correct. Try again or search a different subreddit!!!");
+                    }else {
+                        noPostCounter++
+                        getPost(subredditSearch);
+                    }
+    
+                };
+    
+            });
+
+        });
+
+    }
+
+    function savePostToUser(ArticleData){
+
+        $.ajax('/saveArticle', {
+            type: 'POST',
+            data: ArticleData
+        }).then(function(data){
+            if(data.articles){
+                $('.btn-warning').attr({
+                    class: 'btn btn-success',
+                    type: 'button'
+                }).prop('disabled', true).text('Saved!');
+            }
+        });
+    };
+
+    function createNote(articleID, noteData){
+
+        $.ajax('/newNote/'+articleID,{
+            type: 'POST',
+            data: noteData
+        }).then(function(results){
+            $("#note-added").trigger('click');
+            console.log(results);
+        });
+    }
+
+
+    function getNotes (articleID){
         $.ajax('/note/' +articleID, {
             type: 'GET'
         }).then(function(article){
-            $(articleNote).addClass('show-article-notes');
-            $(articleNote).removeClass('hide-article-notes');
+
             console.log(article);
             if(article.notes.length > 0){
                 console.log("HEre");
@@ -198,115 +367,5 @@ $(document).ready(function(){
 
 
         })
-    });
-
-
-    $('.form-new-note').submit(function(event){
-        event.preventDefault();
-        var formID = $(this).attr('data-form');
-        var title = $('input[data-new-title="' + formID +'"]').val().trim();
-        var body = $('textarea[data-new-body="' + formID +'"]').val().trim();
-
-        var newNote = {
-            title: title,
-            body : body
-        };
-        $('button[data-new-btn="' + formID + '"]').prop('disabled', true).text('Adding Note...');
-        createNote(formID, newNote);
-
-        console.log(title);
-        console.log(body);
-    })
-
-
-
-
-    function createNewRow(post) {
-        
-        var http = "https://"
-        if(post.link.includes(http)){
-
-        }else {
-            post.link = "https://www.reddit.com" + post.link;
-        }
-        console.log(post);
-        var divHolder = $("<div>").addClass("col-4");
-        var newPostCard = $("<div>").addClass("card");
-        var newPostCardTitle = $("<div>").addClass("card-header").text(post.title);
-        var saveBtn = $("<button>").addClass("save btn btn-primary").attr({
-            type: 'button',
-            'data-link' : post.link,
-            'data-title' : post.title
-        }).text("Save");
-        var newPostCardBody = $("<div>").addClass("card-body");
-        var newPostLink = $("<a>").attr({
-            href : post.link,
-            target : "_blank"
-        }).text("Link to Post");
-        newPostCardBody.append(saveBtn);
-        newPostCardBody.append(newPostLink);
-        newPostCard.append(newPostCardTitle);
-        newPostCard.append(newPostCardBody);
-        newPostCard.data("post", post);
-        divHolder.append(newPostCard);
-        return divHolder;
-      }
-
-    function getPost(subredditSearch){
-        $.ajax("/newArticles/" + subredditSearch, {
-            type: "GET"
-        }).then(function(data){
-            console.log(data);
-            if(data.length > 0){
-                $("#searched-articles").empty();
-                for(var i = 0; i < data.length; i++){
-                    var card = createNewRow(data[i])
-    
-                    
-    
-                    $("#searched-articles").append(card);
-                };
-                $(".save").on('click', function(){
-
-                    console.log($(this).attr('data-title'));
-                    console.log($(this).attr('data-link'));
-                    console.log(location.href.split('?'))
-
-                    var data = {
-                        subReddit : subreddit,
-                        title : $(this).attr('data-title'),
-                        link : $(this).attr('data-link')
-                    };
-
-                    savePostToUser(data, location.href.split('?')[1]);
-
-                });
-
-            }else {
-                getPost(subredditSearch);
-            };
-
-        });
-    }
-
-    function savePostToUser(ArticleData, userId){
-
-        $.ajax('/save/' + userId, {
-            type: 'POST',
-            data: ArticleData
-        }).then(function(data){
-            console.log(data);
-        });
-    };
-
-    function createNote(articleID, noteData){
-
-        $.ajax('/newNote/'+articleID,{
-            type: 'POST',
-            data: noteData
-        }).then(function(results){
-            $("#note-added").trigger('click');
-            console.log(results);
-        });
     }
 })
