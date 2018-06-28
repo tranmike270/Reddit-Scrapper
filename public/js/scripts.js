@@ -143,13 +143,14 @@ $(document).ready(function(){
         $.ajax('/saved',{
             type: "GET"
         }).then(function(articles){
+            console.log("Hello");
             var links = [];
-            if(articles[0].link){
+            if(articles.length > 0){
                 for(var k = 0; k < articles.length; k++){
                     links.push(articles[k].link)
                 }
-
             }
+
 
             $.ajax("/newArticles/" + subredditSearch, {
                 type: "GET"
