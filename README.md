@@ -14,7 +14,7 @@ Simply do a git clone and npm install and you'll be able to run it locally.
 
 ## Deployed at
 
-https://reddit-scrapper.herokuapp.com/
+
 
 ## Contributing
 
