@@ -1,4 +1,4 @@
-# Reddit Scrapper
+# Reddit Scrapper (depreciated)
 
 The point of this web application is to allow users to be able to search subreddits for post and save which ever post they want. If they ever come back looking for post that is long gone from the front page, all they need is to long in and that post will be visible on the users dashboard. At the dashboard users can add; update; remove notes to their post, and even remove the post itself. 
 
